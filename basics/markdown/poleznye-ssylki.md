@@ -11,3 +11,5 @@
 typescript roadmap [https://roadmap.sh/typescript](https://roadmap.sh/typescript)
 
 Разное [https://github.com/dzharii/awesome-typescript](https://github.com/dzharii/awesome-typescript)
+
+Онлайн книга по typescript [https://www.totaltypescript.com/](https://www.totaltypescript.com/)
