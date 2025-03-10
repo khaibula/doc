@@ -12,4 +12,7 @@ typescript roadmap [https://roadmap.sh/typescript](https://roadmap.sh/typescript
 
 Разное [https://github.com/dzharii/awesome-typescript](https://github.com/dzharii/awesome-typescript)
 
+Разное 2 [https://github.com/damianc/dev-notes/blob/master/typescript/bivariance-hack.md](https://github.com/damianc/dev-notes/blob/master/typescript/bivariance-hack.md)
+
 Онлайн книга по typescript [https://www.totaltypescript.com/](https://www.totaltypescript.com/)
+
