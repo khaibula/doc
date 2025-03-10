@@ -13,6 +13,8 @@ hidden: true
 
 </details>
 
+
+
 <details>
 
 <summary>Какие примитивные типы данных есть в TypeScript?</summary>
@@ -31,6 +33,8 @@ void: Отсутствие значения (часто для функций). 
 never: Тип для функций, которые никогда не возвращают результат.
 
 </details>
+
+
 
 <details>
 
@@ -101,6 +105,8 @@ Intersection объединяет несколько типов в **один**,
 
 </details>
 
+
+
 <details>
 
 <summary>Что такое type? Что такое interface? Чем они отличаются?</summary>
@@ -150,6 +156,8 @@ Intersection объединяет несколько типов в **один**,
 
 </details>
 
+
+
 <details>
 
 <summary><strong>Что такое type assertion (утверждение типа) и как его выполнить?</strong></summary>
@@ -166,6 +174,8 @@ Intersection объединяет несколько типов в **один**,
 * **Используйте осторожно**: Убедитесь, что данные соответствуют типу, чтобы избежать ошибок времени выполнения.
 
 </details>
+
+
 
 <details>
 
@@ -253,6 +263,8 @@ function process(value: unknown) {
 
 </details>
 
+
+
 <details>
 
 <summary>Как работают функции в typescript?</summary>
@@ -330,6 +342,8 @@ function fn(ctor: SomeConstructor) {
 
 </details>
 
+
+
 <details>
 
 <summary>Что такое object? Чем он отличается от Object?</summary>
@@ -354,6 +368,8 @@ function fn(ctor: SomeConstructor) {
 
 
 </details>
+
+
 
 <details>
 
@@ -395,6 +411,8 @@ staffer.name;
 
 </details>
 
+
+
 <details>
 
 <summary>Что такое кортежи? Как они работают?</summary>
@@ -430,6 +448,8 @@ type BooleansStringNumber = [...boolean[], string, number];
 ```
 
 </details>
+
+
 
 <details>
 
@@ -487,6 +507,8 @@ const response: PaginatedResponse<string> = {
 
 </details>
 
+
+
 <details>
 
 <summary>Что знаешь про и<strong>ндексированные типы доступа (Indexed Access Types)?</strong></summary>
@@ -514,6 +536,8 @@ type BookType = Library[number]; // Book
 
 
 </details>
+
+
 
 <details>
 
@@ -577,6 +601,8 @@ function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
 
 </details>
 
+
+
 <details>
 
 <summary>Что знаешь про <strong>сопоставленные типы или Mapped Types</strong></summary>
@@ -636,6 +662,8 @@ type User = {
 
 
 </details>
+
+
 
 <details>
 
@@ -828,6 +856,8 @@ class User {
 
 </details>
 
+
+
 <details>
 
 <summary>Enums</summary>
@@ -938,9 +968,11 @@ type Color = "RED" | "GREEN" | "BLUE";
 
 </details>
 
+
+
 <details>
 
-<summary>Пронстранства имет(Namespace)</summary>
+<summary>Пронстранства имен(Namespace)</summary>
 
 это способ организации кода в логические группы, чтобы избежать конфликтов имен и улучшить структуру проекта
 
@@ -1022,11 +1054,120 @@ const user: MyApp.User = MyApp.getUser();
 
 </details>
 
+
+
 <details>
 
-<summary></summary>
+<summary>Файлы деклараций(declaration files) d.ts</summary>
+
+Это специальные файлы, которые содержат только информацию о типах. Они нужны, чтобы TypeScript понимал структуру существующего JavaScript-кода (например, сторонних библиотек) и обеспечивал проверку типов
+
+**Что такое файлы деклараций?**
+
+Это файлы с расширением `.d.ts`, которые описывают:
+
+* Типы переменных, функций, классов.
+* Структуру модулей.
+* Глобальные объекты (например, `window` или `process`).
+
+**Пример:**
+
+```typescript
+// myLib.d.ts
+declare function greet(name: string): void;
+declare const version: string;
+```
+
+Здесь TypeScript узнает, что есть функция `greet` и константа `version`, даже если их реализация написана на JavaScript.
+
+**Зачем они нужны?**
+
+* **Интеграция с JavaScript-библиотеками**: Например, для jQuery или Lodash.
+* **Типизация легаси-кода**: Если проект частично написан на JS.
+* **Описание глобальных переменных**: Например, переменных, добавленных в `window`.
+* **Публикация библиотек**: Чтобы пользователи вашего TS-кода видели типы.
+
+**Глобальные vs модульные декларации**
+
+*   **Глобальные**: Описывают типы, доступные везде (например, через `<script>` в браузере).
+
+    ```typescript
+    // globals.d.ts
+    declare const APP_VERSION: string;
+    ```
+*   **Модульные**: Описывают структуру конкретного модуля.
+
+    ```typescript
+    // модуль "math-utils.d.ts"
+    declare module "math-utils" {
+        export function sum(a: number, b: number): number;
+    }
+    ```
+
+**Объявление переменных и функций**
+
+```typescript
+declare const PI: number;
+declare function calculateArea(radius: number): number;
+```
+
+**Описание классов**
+
+```typescript
+declare class User {
+    constructor(name: string);
+    getName(): string;
+}
+```
+
+**Модули (для сторонних библиотек)**
+
+```typescript
+declare module "lodash" {
+    export function shuffle<T>(array: T[]): T[];
+}
+```
+
+**Глобальные расширения**
+
+```typescript
+declare global {
+    interface Window {
+        myCustomProp: string;
+    }
+}
+```
 
 
+
+**Пример: Типизация jQuery**
+
+Допустим, у вас есть JS-код, подключающий jQuery через `<script>`. Чтобы TypeScript его понимал:
+
+```typescript
+// jquery.d.ts
+declare interface JQuery {
+    modal(command: "open" | "close"): void;
+}
+
+declare const $: (selector: string) => JQuery;
+```
+
+Теперь в TS-коде можно писать:
+
+```typescript
+$("#myModal").modal("open"); // Без ошибок типов!
+```
+
+**DefinitelyTyped и `@types`**
+
+Большинство популярных JS-библиотек уже имеют декларации в репозитории [DefinitelyTyped](https://definitelytyped.org/). Установите их через npm:
+
+```bash
+npm install --save-dev @types/jquery
+```
+
+Теперь TypeScript автоматически подхватит типы для `jQuery`.
 
 </details>
 
