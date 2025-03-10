@@ -12,4 +12,4 @@
 * [Typescript](basics/markdown/README.md)
   * [Полезные ссылки](basics/markdown/poleznye-ssylki.md)
   * [Вопросы](basics/markdown/voprosy.md)
-  * [Что нового в typescript](basics/markdown/chto-novogo-v-typescript.md)
+  * [Хаки](basics/markdown/khaki.md)

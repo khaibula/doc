@@ -584,6 +584,106 @@ function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
 
 <details>
 
+<summary>Что знаешь о ключевом слове infer?</summary>
+
+ключевое слово **`infer`** — это мощные инструменты TypeScript для создания гибких и динамических типов
+
+**Синтаксис:**
+
+```typescript
+T extends infer U ? U : never
+```
+
+**Где:**
+
+* `U` — временный тип, выводимый из `T`.
+
+**Примеры использования `infer`**
+
+**a. Получение типа возвращаемого значения функции (`ReturnType`)**
+
+```typescript
+type MyReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+function getUser() { return { name: "Alice" }; }
+type User = MyReturnType<typeof getUser>; // { name: string }
+```
+
+**b. Извлечение типа параметров функции (`Parameters`)**
+
+```typescript
+type MyParameters<T> = T extends (...args: infer P) => any ? P : never;
+
+function greet(name: string, age: number) {}
+type Params = MyParameters<typeof greet>; // [string, number]
+```
+
+**c. Получение типа элемента массива**
+
+```typescript
+type ArrayItem<T> = T extends (infer Item)[] ? Item : never;
+
+type Numbers = ArrayItem<number[]>; // number
+```
+
+**d. Работа с промисами**
+
+```typescript
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+
+type A = UnwrapPromise<Promise<string>>; // string
+type B = UnwrapPromise<42>;              // 42
+```
+
+</details>
+
+
+
+<details>
+
+<summary>Дистрибутивные union типы, что такое? Как работает?</summary>
+
+Дистрибутивные условные типы – это особенность TypeScript, согласно которой условный тип автоматически распределяется по всем членам union-типа. С теоретической точки зрения это можно рассматривать как операцию «map» над суммарными (union) типами, где каждое слагаемое обрабатывается отдельно.
+
+### Как это работает
+
+При объявлении условного типа в форме:
+
+```ts
+type Conditional<T> = T extends U ? X : Y;
+```
+
+если `T` является union-типом (например, `A | B | C`), то TypeScript интерпретирует это так, как если бы условие применялось к каждому компоненту по отдельности:
+
+```ts
+type Conditional<A | B | C> = (A extends U ? X : Y) | (B extends U ? X : Y) | (C extends U ? X : Y);
+```
+
+Таким образом, результатом является union из результатов применения условного типа к каждому элементу исходного union.
+
+
+
+С точки зрения теории типов, union-тип можно рассматривать как _сумму_ (sum type), где значение может принадлежать одному из нескольких вариантов. Дистрибутивное поведение условных типов похоже на сопоставление с образцом (pattern matching) для суммарных типов, когда функция (в данном случае условный тип) применяется к каждому возможному варианту.
+
+Это позволяет писать более выразительные и обобщенные типы, так как поведение условного типа становится более предсказуемым:
+
+* Если вам нужно проверить каждый вариант union-типа отдельно – дистрибуция помогает.
+* Если же нужно проверить объединенный тип целиком, можно «обернуть» параметр, например, в кортеж, чтобы предотвратить дистрибуцию:
+
+```ts
+type CheckNumberNonDistributive<T> = [T] extends [number] ? "number" : "not number";
+
+type NonDistributedResult = CheckNumberNonDistributive<number | string>;
+// Здесь [number | string] не распределяется по компонентам,
+// результат: "not number"
+```
+
+</details>
+
+
+
+<details>
+
 <summary>Что знаешь про сопоставленные типы или Mapped Types</summary>
 
 Сопоставленные типы позволяют создавать **новые типы на основе существующих**, итерируясь по ключам и преобразуя их. Это мощный инструмент для модификации свойств объекта: изменения их типов, модификаторов (`readonly`, `?`) или даже переименования ключей.
@@ -694,7 +794,7 @@ TypeScript предоставляет встроенные утилиты для
 
 <details>
 
-<summary>Классы, что можно настраивать</summary>
+<summary>Расскажи про классы, что можно настраивать?</summary>
 
 это синтаксический сахар над прототипным наследованием JavaScript, но с добавлением строгой типизации, модификаторов доступа и других возможностей
 
@@ -829,7 +929,7 @@ class User {
 
 <details>
 
-<summary>Enums</summary>
+<summary>Что такое Enums? Для чего они нужны?</summary>
 
 Это специальный тип, который позволяет задавать именованные константы для набора числовых или строковых значений
 
@@ -937,7 +1037,7 @@ type Color = "RED" | "GREEN" | "BLUE";
 
 <details>
 
-<summary>Пространство имен(Namespace)</summary>
+<summary>Что такое пространство имен(Namespace)?</summary>
 
 это способ организации кода в логические группы, чтобы избежать конфликтов имен и улучшить структуру проекта
 
@@ -1019,7 +1119,7 @@ const user: MyApp.User = MyApp.getUser();
 
 <details>
 
-<summary>Файлы деклараций(declaration files) d.ts</summary>
+<summary>Что такое файлы деклараций(declaration files) d.ts. Для чего они нужны?</summary>
 
 Это специальные файлы, которые содержат только информацию о типах. Они нужны, чтобы TypeScript понимал структуру существующего JavaScript-кода (например, сторонних библиотек) и обеспечивал проверку типов
 
