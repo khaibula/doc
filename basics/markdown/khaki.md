@@ -130,7 +130,7 @@ TypeScript создаёт тип, который требует, чтобы об
     Аналогичный эффект достигается созданием утилитного типа, который явно перебирает ключи объединения:
 
     ```ts
-    tsКопировать кодtype MergeOverride<T, U> = {
+    type MergeOverride<T, U> = {
       [K in keyof T | keyof U]: K extends keyof U ? U[K] : K extends keyof T ? T[K] : never;
     };
 
