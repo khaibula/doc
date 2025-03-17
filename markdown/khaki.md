@@ -73,7 +73,7 @@ type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U
 
 <details>
 
-<summary>Песечение обьектов !== обьект</summary>
+<summary>Пересечение обьектов !== обьект</summary>
 
 Когда вы пишете:
 
@@ -121,8 +121,7 @@ TypeScript создаёт тип, который требует, чтобы об
     Использование конструкции вроде `Omit<Foo & Bar, never>` заставляет TypeScript перебрать все свойства пересечения и создать новый тип, где все ключи объединены:
 
     ```ts
-    type Flatten<T> = { [K in keyof T]: T[K] };
-    type MergedFlattened = Flatten<Foo & Bar>;
+    type MergedFlattened = Omit<Foo & Bar, never>;
     // Теперь MergedFlattened будет равен:
     // { a: number; b: number; c: boolean }
     ```
@@ -130,12 +129,10 @@ TypeScript создаёт тип, который требует, чтобы об
     Аналогичный эффект достигается созданием утилитного типа, который явно перебирает ключи объединения:
 
     ```ts
-    type MergeOverride<T, U> = {
-      [K in keyof T | keyof U]: K extends keyof U ? U[K] : K extends keyof T ? T[K] : never;
-    };
-
-    type MergedResult = MergeOverride<Foo, Bar>;
-    // Результат: { a: number; b: number; c: boolean }
+    type Flatten<T> = { [K in keyof T]: T[K] };
+    type MergedFlattened = Flatten<Foo & Bar>;
+    // Теперь MergedFlattened будет равен:
+    // { a: number; b: number; c: boolean }
     ```
 
 #### Итог
@@ -147,6 +144,12 @@ TypeScript создаёт тип, который требует, чтобы об
   Используя такие конструкции, как `Omit<Foo & Bar, never>` или итерацию по ключам, мы вынуждаем компилятор пересчитать пересечение и получить «развернутый» объектный тип, что упрощает его использование и сравнение.
 
 Таким образом, чтобы добиться именно «слияния» объектов в плоскую структуру, приходится прибегать к дополнительным приёмам, поскольку TS сохраняет пересечение как отдельную конструкцию, а не преобразует его автоматически в объединённый тип с набором всех свойств.
+
+```
+// Some code
+```
+
+
 
 </details>
 
