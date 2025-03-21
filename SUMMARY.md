@@ -32,4 +32,7 @@
     * [SOLID](software-design-and-architecture/principy-chistogo-koda/solid.md)
     * [Держись от фрейворков и библиотек подальше](software-design-and-architecture/principy-chistogo-koda/derzhis-ot-freivorkov-i-bibliotek-podalshe.md)
     * [GRASP](software-design-and-architecture/principy-chistogo-koda/grasp.md)
+    * [Инкапсулируй то, что меняется](software-design-and-architecture/principy-chistogo-koda/inkapsulirui-to-chto-menyaetsya.md)
+    * [Голливудский принцип](software-design-and-architecture/principy-chistogo-koda/gollivudskii-princip.md)
+    * [Инъекция зависимостей](software-design-and-architecture/principy-chistogo-koda/inekciya-zavisimostei.md)
   * [Сссылки](software-design-and-architecture/sssylki.md)
