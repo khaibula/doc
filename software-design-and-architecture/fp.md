@@ -1,7 +1,6 @@
 ---
 hidden: true
-icon: react
 ---
 
-# React
+# ФП
 
