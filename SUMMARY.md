@@ -23,3 +23,8 @@
   * [Архитектура Фронтенд приложений](software-design-and-architecture/arkhitektura-frontend-prilozhenii/README.md)
     * [Полезные ссылки](software-design-and-architecture/arkhitektura-frontend-prilozhenii/poleznye-ssylki.md)
   * [Закон дементры](software-design-and-architecture/law-of-demeter-zakon-dementry.md)
+  * [Принципы чистого кода](software-design-and-architecture/principy-chistogo-koda.md)
+  * [SOLID](software-design-and-architecture/solid.md)
+  * [Сссылки](software-design-and-architecture/sssylki.md)
+  * [Консистентность кода](software-design-and-architecture/konsistentnost-koda.md)
+  * [Декомпозируй](software-design-and-architecture/dekompozirui.md)
