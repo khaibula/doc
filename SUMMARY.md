@@ -22,4 +22,4 @@
     * [Ассоциации](software-design-and-architecture/oop/associacii.md)
   * [Архитектура Фронтенд приложений](software-design-and-architecture/arkhitektura-frontend-prilozhenii/README.md)
     * [Полезные ссылки](software-design-and-architecture/arkhitektura-frontend-prilozhenii/poleznye-ssylki.md)
-  * [Law of Demeter (Закон дементры)](software-design-and-architecture/law-of-demeter-zakon-dementry.md)
+  * [Закон дементры](software-design-and-architecture/zakon-dementry.md)
