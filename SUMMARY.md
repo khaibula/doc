@@ -19,6 +19,7 @@
     * [Запахи кода](software-design-and-architecture/oop/zapakhi-koda.md)
     * [DRY](software-design-and-architecture/oop/dry.md)
     * [Полезные ссылки](software-design-and-architecture/oop/poleznye-ssylki.md)
+    * [Ассоциации](software-design-and-architecture/oop/associacii.md)
   * [Архитектура Фронтенд приложений](software-design-and-architecture/arkhitektura-frontend-prilozhenii/README.md)
     * [Полезные ссылки](software-design-and-architecture/arkhitektura-frontend-prilozhenii/poleznye-ssylki.md)
   * [Law of Demeter (Закон дементры)](software-design-and-architecture/law-of-demeter-zakon-dementry.md)
