@@ -2,9 +2,11 @@
 
 ## Basics
 
+* [Другое](README.md)
+
 ***
 
-* [Typescript](README.md)
+* [Typescript](<README (1).md>)
   * [Полезные ссылки](markdown/poleznye-ssylki.md)
   * [Вопросы для самопроверки](markdown/voprosy-dlya-samoproverki.md)
   * [Хаки](markdown/khaki.md)
@@ -28,3 +30,6 @@
   * [Сссылки](software-design-and-architecture/sssylki.md)
   * [Консистентность кода](software-design-and-architecture/konsistentnost-koda.md)
   * [Декомпозируй](software-design-and-architecture/dekompozirui.md)
+  * [Держись от фрейворков и библиотек подальше](software-design-and-architecture/derzhis-ot-freivorkov-i-bibliotek-podalshe.md)
+  * [Используй говорящие названия](software-design-and-architecture/ispolzui-govoryashie-nazvaniya.md)
+  * [Композиция важнее наследования](software-design-and-architecture/kompoziciya-vazhnee-nasledovaniya.md)
