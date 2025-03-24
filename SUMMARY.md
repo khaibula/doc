@@ -40,4 +40,4 @@
     * [Инкапсулируй то, что меняется](software-design-and-architecture/principy-chistogo-koda/inkapsulirui-to-chto-menyaetsya.md)
     * [Голливудский принцип](software-design-and-architecture/principy-chistogo-koda/gollivudskii-princip.md)
     * [Инъекция зависимостей](software-design-and-architecture/principy-chistogo-koda/inekciya-zavisimostei.md)
-  * [Ссылки](software-design-and-architecture/ssylki.md)
+  * [Ссылки](software-design-and-architecture/sssylki.md)
