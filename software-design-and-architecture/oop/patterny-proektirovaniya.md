@@ -369,60 +369,76 @@ clientCode(director)
 
 ***
 
-### Пример без использования паттерна «Прототип»
+### Пример
 
-В этом примере каждый новый объект создаёт свою копию метода, что приводит к дублированию кода и увеличению потребления памяти:
+Допустим, у нас есть класс `Car`, который не так просто создать (в реальном проекте может быть куча параметров, внешние настройки). Мы реализуем прототип:
 
-```javascript
-function Car(model, year) {
-    this.model = model;
-    this.year = year;
-    // Каждый экземпляр создаёт собственную функцию
-    this.getInfo = function() {
-        return `Модель: ${this.model}, Год: ${this.year}`;
-    };
+```typescript
+interface Prototype<T> {
+  clone(): T;
 }
 
-let car1 = new Car("Toyota", 2020);
-let car2 = new Car("Honda", 2019);
+class Car implements Prototype<Car> {
+  public model: string;
+  public color: string;
+  public features: string[];
 
-console.log(car1.getInfo()); // Модель: Toyota, Год: 2020
-console.log(car2.getInfo()); // Модель: Honda, Год: 2019
+  constructor(model: string, color: string, features: string[]) {
+    this.model = model;
+    this.color = color;
+    this.features = features;
+  }
+
+  public clone(): Car {
+    // Глубокое копирование (если нужно)
+    return new Car(
+      this.model,
+      this.color,
+      [...this.features]
+    );
+  }
+}
+
+// Использование
+function main() {
+  // Создаём «дорого» настроенный объект (прототип)
+  const baseCar = new Car("Model X", "Red", ["GPS", "Heated seats"]);
+
+  // Если нужно несколько похожих машин:
+  const car1 = baseCar.clone();
+  car1.color = "Blue"; // Можем изменить только одно поле
+  console.log(car1);  // Car { model: 'Model X', color: 'Blue', features: [ 'GPS', 'Heated seats' ] }
+
+  const car2 = baseCar.clone();
+  car2.features.push("Sunroof");
+  console.log(car2);
+  // Car { model: 'Model X', color: 'Red', features: [ 'GPS', 'Heated seats', 'Sunroof' ] }
+
+  // baseCar не изменился
+  console.log(baseCar);
+  // Car { model: 'Model X', color: 'Red', features: [ 'GPS', 'Heated seats' ] }
+}
+
+main();
 ```
 
-**Недостатки:**
-
-* При создании большого количества объектов метод `getInfo` будет дублироваться в памяти для каждого экземпляра, что неэффективно.
+* Здесь:
+  * `clone()` создаёт **новый** экземпляр, копируя важные поля.
+  * Сложный процесс инициализации (которого мы не расписывали) можно выполнить один раз в `baseCar`.
+  * Затем мы получаем «похожие» экземпляры, изменяя только нужные детали.
 
 ***
 
-### Пример с использованием паттерна «Прототип»
+### Ключевые моменты
 
-Здесь мы выносим общий метод в прототип конструктора, благодаря чему все экземпляры будут ссылаться на один и тот же метод:
-
-```javascript
-function Car(model, year) {
-    this.model = model;
-    this.year = year;
-}
-
-// Метод getInfo добавлен в прототип, а не создаётся для каждого экземпляра
-Car.prototype.getInfo = function() {
-    return `Модель: ${this.model}, Год: ${this.year}`;
-};
-
-let car1 = new Car("Toyota", 2020);
-let car2 = new Car("Honda", 2019);
-
-console.log(car1.getInfo()); // Модель: Toyota, Год: 2020
-console.log(car2.getInfo()); // Модель: Honda, Год: 2019
-```
-
-**Преимущества:**
-
-* **Экономия памяти:** Метод `getInfo` создаётся один раз и разделяется всеми экземплярами.
-* **Производительность:** Уменьшается время создания объектов, так как не требуется создавать копию метода для каждого объекта.
-* **Управляемость:** Легче вносить изменения в метод, поскольку изменение в прототипе сразу отражается на всех объектах.
+1. **Метод `clone()`**:
+   * Важно решить, копируем ли «поверхностно» (shallow copy) или «глубоко» (deep copy). В примере выше мы делаем простое копирование массива `features` через `[...this.features]`. Если массив содержит объекты, нужно подумать, копировать ли их тоже.
+2. **Регистрация прототипов**:
+   * Часто вместе с Prototype используют «регистрацию/хранилище» уже созданных прототипов. Когда надо новый объект, мы просто берём нужный из реестра и клонируем.
+3. **Избегаем привязки к конструкторам**:
+   * При Prototype мы не зависим от того, **как** объект создаётся, мы лишь знаем, что `clone()` вернёт копию. Для пользователя паттерна это всё, что нужно.
+4. **Сокращение иерархий наследования**:
+   * Вместо большой иерархии «Factory» или длинных switch-case по типам, можно иметь один интерфейс `Prototype` и набор конкретных прототипов (Car, Truck, Bike), у каждого — свой `clone()`.
 
 </details>
 
