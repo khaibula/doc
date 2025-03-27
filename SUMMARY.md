@@ -42,3 +42,5 @@
     * [Голливудский принцип](software-design-and-architecture/principy-chistogo-koda/gollivudskii-princip.md)
     * [Инъекция зависимостей](software-design-and-architecture/principy-chistogo-koda/inekciya-zavisimostei.md)
   * [Ссылки](software-design-and-architecture/sssylki.md)
+* [Оптимизация](optimizaciya/README.md)
+  * [Подстановки переменных окружения в сборках](optimizaciya/podstanovki-peremennykh-okruzheniya-v-sborkakh.md)
