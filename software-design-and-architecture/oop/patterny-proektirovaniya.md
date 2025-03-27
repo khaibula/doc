@@ -1234,7 +1234,7 @@ console.log("Все изменения:", changeLog);
 3. **Принцип единственной ответственности (SRP)** – каждый обработчик отвечает только за свою часть работы.
 4. **Принцип открытости/закрытости (OCP)** – можно добавлять новые обработчики без изменения существующего кода.
 
-### **Перевод**
+### Пример
 
 ```javascript
 // Базовый класс компонента
@@ -1723,66 +1723,109 @@ class Checkbox extends Component {
 ### **Пример**
 
 ```typescript
-// Класс-снимок, инкапсулирующий состояние Originator
+// ==== Класс-снимок, инкапсулирующий состояние Originator ==== //
 class Memento {
-    constructor(private state: string) {}
+  private id: string;
 
-    getState(): string {
-        return this.state;
-    }
+  constructor(
+    private state: string
+  ) {
+    // Генерируем уникальный ID (упрощённо)
+    this.id = `memento-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  }
+
+  public getState(): string {
+    return this.state;
+  }
+
+  public getId(): string {
+    return this.id;
+  }
 }
 
-// Класс, чье состояние нужно сохранять
+// ==== Класс, чье состояние нужно сохранять (Originator) ==== //
 class Originator {
-    private state: string = '';
+  private state: string = "";
 
-    setState(state: string): void {
-        console.log(`Установлено состояние: ${state}`);
-        this.state = state;
-    }
+  public setState(state: string): void {
+    console.log(`\nУстановлено состояние: ${state}`);
+    this.state = state;
+  }
 
-    save(): Memento {
-        console.log(`Сохранение состояния: ${this.state}`);
-        return new Memento(this.state);
-    }
+  // Создание "снимка" текущего состояния
+  public save(): Memento {
+    console.log(`Сохранение состояния: ${this.state}`);
+    return new Memento(this.state);
+  }
 
-    restore(memento: Memento): void {
-        this.state = memento.getState();
-        console.log(`Восстановлено состояние: ${this.state}`);
-    }
+  // Восстановление состояния из Memento
+  public restore(memento: Memento): void {
+    this.state = memento.getState();
+    console.log(`Восстановлено состояние: ${this.state}`);
+  }
 }
 
-// Класс, управляющий снимками
+// ==== Класс, управляющий снимками (Caretaker) ==== //
 class Caretaker {
-    private history: Memento[] = [];
+  // Храним снимки в Map: { id -> Memento }
+  private history: Map<string, Memento> = new Map();
 
-    saveMemento(memento: Memento): void {
-        console.log(`Сохранен снимок`);
-        this.history.push(memento);
-    }
+  // Сохраняем снимок
+  public saveMemento(memento: Memento): void {
+    this.history.set(memento.getId(), memento);
+    console.log(`Сохранен снимок с ID=${memento.getId()}`);
+  }
 
-    getMemento(index: number): Memento | null {
-        return this.history[index] || null;
-    }
+  // Получаем снимок по ID
+  public getMemento(id: string): Memento | null {
+    const found = this.history.get(id);
+    return found || null;
+  }
+
+  // Выводим список всех ID, чтобы было удобнее смотреть
+  public listIds(): string[] {
+    return Array.from(this.history.keys());
+  }
 }
 
-// Пример использования
-const originator = new Originator();
-const caretaker = new Caretaker();
+// ===== Пример использования ===== //
+function main() {
+  const originator = new Originator();
+  const caretaker = new Caretaker();
 
-originator.setState("Состояние 1");
-caretaker.saveMemento(originator.save());
+  // Устанавливаем первое состояние
+  originator.setState("Состояние 1");
+  const memento1 = originator.save();       // Создали снимок
+  caretaker.saveMemento(memento1);         // Сохранили в caretaker
 
-originator.setState("Состояние 2");
-caretaker.saveMemento(originator.save());
+  // Устанавливаем второе состояние
+  originator.setState("Состояние 2");
+  const memento2 = originator.save();
+  caretaker.saveMemento(memento2);
 
-originator.setState("Состояние 3");
+  // Устанавливаем третье состояние
+  originator.setState("Состояние 3");
 
-console.log("Откат к предыдущему состоянию...");
-originator.restore(caretaker.getMemento(1)!);
+  // Посмотрим, какие у нас есть ID
+  const allIDs = caretaker.listIds();
+  console.log("\nСписок всех сохраненных снимков:", allIDs);
 
-console.log("Откат к самому первому состоянию...");
-originator.restore(caretaker.getMemento(0)!);
+  // Предположим, хотим откатиться к "второму" состоянию (memento2)
+  console.log("\nОткат к предыдущему состоянию (memento2)...");
+  originator.restore(memento2);
+  caretaker.saveMemento(memento2);
+
+  // И давайте откатимся к самому первому:
+  console.log("\nОткат к самому первому состоянию (memento1)...");
+  originator.restore(memento1);
+  caretaker.saveMemento(memento1);
+
+  // Итог: у нас в caretaker теперь еще и автодобавленные снимки
+  console.log("\nИтоговый список снимков:");
+  console.log(caretaker.listIds());
+}
+
+main();
 ```
 
 ***

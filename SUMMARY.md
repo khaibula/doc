@@ -10,6 +10,7 @@
   * [Полезные ссылки](markdown/poleznye-ssylki.md)
   * [Вопросы для самопроверки](markdown/voprosy-dlya-samoproverki.md)
   * [Хаки](markdown/khaki.md)
+  * [Строгий typescript (не описан)](markdown/strogii-typescript-ne-opisan.md)
 * [React](react/README.md)
   * [Вопросы для самопроверки](react/voprosy-dlya-samoproverki.md)
   * [Полезные ссылки](react/poleznye-ssylki.md)
